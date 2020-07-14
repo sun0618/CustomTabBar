@@ -16,6 +16,9 @@
 #import "FourViewController.h"
 #import "FiveViewController.h"
 
+#define iPhoneX (([UIScreen mainScreen].bounds.size.height) >= 812 ? YES : NO)
+#define kBottomSafeHeight (iPhoneX ? 34 : 0)
+
 @interface RootTabBarController ()<UITabBarControllerDelegate>
 
 @property (nonatomic,assign)CGFloat tabHeight;
@@ -26,6 +29,8 @@
 @property (nonatomic,strong)FourViewController *fourvc;
 @property (nonatomic,strong)FiveViewController *fivevc;
 
+@property (nonatomic,strong)TabbarBackView *tabBarView;
+
 @end
 
 @implementation RootTabBarController
@@ -35,11 +40,11 @@
     
     self.delegate = self;
 //    设置底部菜单栏高度
-    _tabHeight = 75;
+    _tabHeight = 75 + kBottomSafeHeight;
     [self clearTabBarTopLine];
-    TabbarBackView *tabBarView = [[TabbarBackView alloc] initWithFrame:CGRectMake(0, 0, UIScreen.mainScreen.bounds.size.width, _tabHeight)];
-    tabBarView.backgroundColor = [UIColor whiteColor];
-    [self.tabBar addSubview:tabBarView];
+    _tabBarView = [[TabbarBackView alloc] initWithFrame:CGRectMake(0, 0, UIScreen.mainScreen.bounds.size.width, _tabHeight)];
+    _tabBarView.backgroundColor = [UIColor whiteColor];
+    [self.tabBar addSubview:_tabBarView];
     [self setBootomTabBar];
     
 //    设置字体颜色
@@ -53,7 +58,7 @@
     [super viewDidLayoutSubviews];
     
     CGRect frame = self.tabBar.frame;
-    frame.size.height = 75;
+    frame.size.height = 75 + kBottomSafeHeight;
     frame.origin.y = self.view.frame.size.height - frame.size.height;
     self.tabBar.frame = frame;
     
@@ -61,10 +66,10 @@
     for (int i=0; i<self.tabBar.items.count; i++) {
         UITabBarItem *item = self.tabBar.items[i];
         if (i!=2) {
-            item.imageInsets = UIEdgeInsetsMake(_tabHeight - 49 - 15, 0, -(_tabHeight - 49 - 15), 0);
+            item.imageInsets = UIEdgeInsetsMake(_tabHeight - 49 - kBottomSafeHeight - 15, 0, -(_tabHeight - 49 - kBottomSafeHeight - 15), 0);
             item.titlePositionAdjustment = UIOffsetMake(0, -3);
             
-        }else{
+        } else if (i != 4) {
             item.imageInsets = UIEdgeInsetsMake(-5, 0, 5, 0);
             item.titlePositionAdjustment = UIOffsetMake(0, -3);
             
@@ -100,6 +105,8 @@
     self.twovc.navigationItem.title = @"管理";
     self.twovc.tabBarItem.image = [UIImage imageNamed:@"StockNavBar"];
     self.twovc.tabBarItem.selectedImage = [[UIImage imageNamed:@"StockNavBarSelect"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    self.twovc.tabBarItem.image = [UIImage imageNamed:@"StockNavBar"];
+       self.twovc.tabBarItem.selectedImage = [[UIImage imageNamed:@"StockNavBarSelect"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     UINavigationController *snav = [[UINavigationController alloc] initWithRootViewController:self.twovc];
     
     self.threevc = [[ThreeViewController alloc] init];
@@ -117,9 +124,12 @@
     UINavigationController *rnav = [[UINavigationController alloc] initWithRootViewController:self.fourvc];
     
     self.fivevc = [[FiveViewController alloc] init];
-    self.fivevc.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"我的" image:[UIImage imageNamed:@"MineNavBar"] tag:1];
+//    self.fivevc.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"我的" image:[UIImage imageNamed:@""] tag:5];
     self.fivevc.navigationItem.title = @"我的";
-    self.fivevc.tabBarItem.image = [UIImage imageNamed:@"MineNavBar"];
+    self.fivevc.tabBarItem = [[UITabBarItem alloc] init];
+    self.fivevc.tabBarItem.tag = 5;
+    self.fivevc.tabBarItem.title = @"我的";
+    self.fivevc.tabBarItem.image = [UIImage imageNamed:@"MineNavBar"];//图片不能为空，因此放一张全透明图片
     self.fivevc.tabBarItem.selectedImage = [[UIImage imageNamed:@"MineNavBarSelect"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     UINavigationController *mnav = [[UINavigationController alloc] initWithRootViewController:self.fivevc];
     
@@ -135,6 +145,9 @@
 //         只能模态跳转，跳过去如果需要导航栏需要自定义
 //        设置通知模式在别的界面也许可以用导航栏跳转
         ThreeViewController *tvc = [[ThreeViewController alloc] init];
+////        导航栏跳转
+//        [((UINavigationController *)tabBarController.selectedViewController) pushViewController:tvc animated:YES];
+    
         tvc.modalPresentationStyle = UIModalPresentationFullScreen;
         [self presentViewController:tvc animated:NO completion:nil];
         return NO;
@@ -142,6 +155,18 @@
     return YES;
     
 }
+
+
+//-(void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item {
+//    
+////    NSLog(@"12");
+////
+////    if (tabBar.selectedItem.tag == 5) {
+//////        UIView *btnView = self.tabBar.subviews[3];
+////        [_tabBarView.fiveImageView startAnimating];
+////    }
+//    
+//}
 
 
 @end

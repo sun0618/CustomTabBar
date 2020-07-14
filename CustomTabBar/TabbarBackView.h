@@ -12,6 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface TabbarBackView : UIView
 
+@property (nonatomic,strong)UIImageView *fiveImageView;
+
 @end
 
 NS_ASSUME_NONNULL_END
