@@ -10,6 +10,8 @@
 
 #import "TabbarBackView.h"
 
+#import "SYTabBar.h"
+
 #import "OneViewController.h"
 #import "TwoViewController.h"
 #import "ThreeViewController.h"
@@ -19,7 +21,7 @@
 #define iPhoneX (([UIScreen mainScreen].bounds.size.height) >= 812 ? YES : NO)
 #define kBottomSafeHeight (iPhoneX ? 34 : 0)
 
-@interface RootTabBarController ()<UITabBarControllerDelegate>
+@interface RootTabBarController ()<UITabBarControllerDelegate,SYTabBarDelegate>
 
 @property (nonatomic,assign)CGFloat tabHeight;
 
@@ -30,6 +32,9 @@
 @property (nonatomic,strong)FiveViewController *fivevc;
 
 @property (nonatomic,strong)TabbarBackView *tabBarView;
+
+
+@property (nonatomic,strong)SYTabBar *syTabBar;
 
 @end
 
@@ -42,10 +47,19 @@
 //    设置底部菜单栏高度
     _tabHeight = 75 + kBottomSafeHeight;
     [self clearTabBarTopLine];
-    _tabBarView = [[TabbarBackView alloc] initWithFrame:CGRectMake(0, 0, UIScreen.mainScreen.bounds.size.width, _tabHeight)];
+    _tabBarView = [[TabbarBackView alloc] initWithFrame:CGRectMake(0, -26, UIScreen.mainScreen.bounds.size.width, _tabHeight)];
     _tabBarView.backgroundColor = [UIColor whiteColor];
-    [self.tabBar addSubview:_tabBarView];
+    
+    //创建自己的tabbar，然后用kvc将自己的tabbar和系统的tabBar替换下
+    _syTabBar = [[SYTabBar alloc] init];
+    _syTabBar.myDelegate = self;
+     [self setValue:_syTabBar forKeyPath:@"tabBar"];
+    
+    [_syTabBar addSubview:_tabBarView];
     [self setBootomTabBar];
+    
+
+    [self clearTabBarTopLine];
     
 //    设置字体颜色
 //    [[UITabBarItem appearance] setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:
@@ -58,23 +72,23 @@
     [super viewDidLayoutSubviews];
     
     CGRect frame = self.tabBar.frame;
-    frame.size.height = 75 + kBottomSafeHeight;
+    frame.size.height = 49 + kBottomSafeHeight;
     frame.origin.y = self.view.frame.size.height - frame.size.height;
-    self.tabBar.frame = frame;
+    _syTabBar.frame = frame;
     
-    self.tabBar.barStyle = UIBarStyleDefault;
-    for (int i=0; i<self.tabBar.items.count; i++) {
-        UITabBarItem *item = self.tabBar.items[i];
-        if (i!=2) {
-            item.imageInsets = UIEdgeInsetsMake(_tabHeight - 49 - kBottomSafeHeight - 15, 0, -(_tabHeight - 49 - kBottomSafeHeight - 15), 0);
-            item.titlePositionAdjustment = UIOffsetMake(0, -3);
-            
-        } else if (i != 4) {
-            item.imageInsets = UIEdgeInsetsMake(-5, 0, 5, 0);
-            item.titlePositionAdjustment = UIOffsetMake(0, -3);
-            
-        }
-    }
+    _syTabBar.barStyle = UIBarStyleDefault;
+//    for (int i=0; i<self.tabBar.items.count; i++) {
+//        UITabBarItem *item = self.tabBar.items[i];
+//        if (i!=2) {
+//            item.imageInsets = UIEdgeInsetsMake(_tabHeight - 49 - kBottomSafeHeight - 15, 0, -(_tabHeight - 49 - kBottomSafeHeight - 15), 0);
+//            item.titlePositionAdjustment = UIOffsetMake(0, -3);
+//
+//        } else if (i != 4) {
+//            item.imageInsets = UIEdgeInsetsMake(-5, 0, 5, 0);
+//            item.titlePositionAdjustment = UIOffsetMake(0, -3);
+//
+//        }
+//    }
 }
 
 #pragma mark - 清除底部菜单栏上面自带的线，以便自定义
@@ -87,8 +101,8 @@
     CGContextFillRect(context, rect);
     UIImage *img = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    self.tabBar.backgroundImage = img;
-    self.tabBar.shadowImage = img;
+    _syTabBar.backgroundImage = img;
+    _syTabBar.shadowImage = img;
 }
 
 #pragma mark - 设置底部菜单栏
@@ -110,9 +124,9 @@
     UINavigationController *snav = [[UINavigationController alloc] initWithRootViewController:self.twovc];
     
     self.threevc = [[ThreeViewController alloc] init];
-    self.threevc.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"" image:[UIImage imageNamed:@"OrderNavBar"] tag:3];
-    self.threevc.navigationItem.title = @"订单";
-    self.threevc.tabBarItem.image = [[UIImage imageNamed:@"OrderNavBar"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    self.threevc.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"" image:[UIImage imageNamed:@"透明"] tag:3];
+//    self.threevc.navigationItem.title = @"订单";
+//    self.threevc.tabBarItem.image = [[UIImage imageNamed:@"OrderNavBar"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
 //    self.threevc.tabBarItem.selectedImage = [[UIImage imageNamed:@"OrderNavBar"] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
     UINavigationController *onav = [[UINavigationController alloc] initWithRootViewController:self.threevc];
     
@@ -134,7 +148,20 @@
     UINavigationController *mnav = [[UINavigationController alloc] initWithRootViewController:self.fivevc];
     
     
+//    self.viewControllers = @[hnav,snav,rnav,mnav];
     self.viewControllers = @[hnav,snav,onav,rnav,mnav];
+}
+
+-(void)tabBarMidButtonClick:(SYTabBar *)tabBar {
+    self.hidesBottomBarWhenPushed = YES;
+    //         只能模态跳转，跳过去如果需要导航栏需要自定义
+    //        设置通知模式在别的界面也许可以用导航栏跳转
+    ThreeViewController *tvc = [[ThreeViewController alloc] init];
+    ////        导航栏跳转
+    //        [((UINavigationController *)tabBarController.selectedViewController) pushViewController:tvc animated:YES];
+    
+    tvc.modalPresentationStyle = UIModalPresentationFullScreen;
+    [self presentViewController:tvc animated:NO completion:nil];
 }
 
 #pragma mark - 拦截点击跳转，处理中间一个TabBar

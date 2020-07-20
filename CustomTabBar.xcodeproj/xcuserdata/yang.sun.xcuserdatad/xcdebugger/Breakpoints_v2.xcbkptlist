@@ -23,48 +23,48 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "72262EFF-0A73-450D-AA62-6B9C05C8B596"
+            uuid = "FA73930A-6F1B-408E-83E4-1562C1AD4485"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "CustomTabBar/RootTabBarController.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "143"
-            endingLineNumber = "143"
-            landmarkName = "-tabBarController:shouldSelectViewController:"
+            startingLineNumber = "82"
+            endingLineNumber = "82"
+            landmarkName = "-viewDidLayoutSubviews"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "CE2EF182-3379-4F1D-A658-91C85D8A1F29"
-            shouldBeEnabled = "No"
+            uuid = "E3106D72-1E32-4EF2-9F7A-709B8D644B53"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "CustomTabBar/RootTabBarController.m"
+            filePath = "CustomTabBar/UITabBarItem+AAAAA.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "151"
-            endingLineNumber = "151"
-            landmarkName = "-tabBarController:shouldSelectViewController:"
+            startingLineNumber = "21"
+            endingLineNumber = "21"
+            landmarkName = "-hitTest:withEvent:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "47E2690D-9BF7-4240-98F8-A28FDFF389D8"
-            shouldBeEnabled = "No"
+            uuid = "FC571C4D-0A57-46FB-A2D5-202C47CA967F"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "CustomTabBar/TabbarBackView.m"
+            filePath = "CustomTabBar/LBTabBar.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "86"
-            endingLineNumber = "86"
-            landmarkName = "-drawRect:"
+            startingLineNumber = "113"
+            endingLineNumber = "113"
+            landmarkName = "-hitTest:withEvent:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

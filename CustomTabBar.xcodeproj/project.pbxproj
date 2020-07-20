@@ -19,6 +19,7 @@
 		9758FFBC2497640E00E9A065 /* FourViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9758FFBB2497640E00E9A065 /* FourViewController.m */; };
 		9758FFBF2497641800E9A065 /* FiveViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9758FFBE2497641800E9A065 /* FiveViewController.m */; };
 		9758FFC224976A7B00E9A065 /* TabbarBackView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9758FFC124976A7B00E9A065 /* TabbarBackView.m */; };
+		975CB5A624C299C3003D9773 /* SYTabBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 975CB5A524C299C3003D9773 /* SYTabBar.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +66,8 @@
 		9758FFBE2497641800E9A065 /* FiveViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FiveViewController.m; sourceTree = "<group>"; };
 		9758FFC024976A7B00E9A065 /* TabbarBackView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TabbarBackView.h; sourceTree = "<group>"; };
 		9758FFC124976A7B00E9A065 /* TabbarBackView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TabbarBackView.m; sourceTree = "<group>"; };
+		975CB5A424C299C3003D9773 /* SYTabBar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SYTabBar.h; sourceTree = "<group>"; };
+		975CB5A524C299C3003D9773 /* SYTabBar.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SYTabBar.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,6 +124,8 @@
 				9758FFAF249763D200E9A065 /* RootTabBarController.m */,
 				9758FFC024976A7B00E9A065 /* TabbarBackView.h */,
 				9758FFC124976A7B00E9A065 /* TabbarBackView.m */,
+				975CB5A424C299C3003D9773 /* SYTabBar.h */,
+				975CB5A524C299C3003D9773 /* SYTabBar.m */,
 				9758FFB1249763ED00E9A065 /* OneViewController.h */,
 				9758FFB2249763ED00E9A065 /* OneViewController.m */,
 				9758FFB4249763F800E9A065 /* TwoViewController.h */,
@@ -287,6 +292,7 @@
 				9758FFBF2497641800E9A065 /* FiveViewController.m in Sources */,
 				9758FFBC2497640E00E9A065 /* FourViewController.m in Sources */,
 				9758FFC224976A7B00E9A065 /* TabbarBackView.m in Sources */,
+				975CB5A624C299C3003D9773 /* SYTabBar.m in Sources */,
 				9758FFB0249763D200E9A065 /* RootTabBarController.m in Sources */,
 				9758FF7B2497637A00E9A065 /* AppDelegate.m in Sources */,
 				9758FF8C2497637E00E9A065 /* main.m in Sources */,

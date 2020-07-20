@@ -8,6 +8,7 @@
 
 #import "TabbarBackView.h"
 
+
 #define iPhoneX (([UIScreen mainScreen].bounds.size.height) >= 812 ? YES : NO)
 #define kBottomSafeHeight (iPhoneX ? 34 : 0)
 
@@ -31,7 +32,7 @@
     //圆心到 左右横线的垂直距离
     CGFloat  toTop = radiu - lineY + lineWidth;//12
      //勾股定理
-    CGFloat all = pow(radiu, 2)- pow(toTop, 2);
+    CGFloat all = pow(radiu, 2) - pow(toTop, 2);
     //对边长（有两个，所以 * 2）
     CGFloat x2 = sqrt(all)*2;//70
     //线条宽度（视图宽度减去 圆 所占的 宽度 ，除以2 得到 一边的宽度）
@@ -80,7 +81,7 @@
 
 //   镂空，去除上边白色部分
     //获取直线下面矩形范围路径
-    UIBezierPath *ppp = [UIBezierPath bezierPathWithRect:CGRectMake(0, lineY-lineWidth, viewWidth, viewHeight - lineY)];
+    UIBezierPath *ppp = [UIBezierPath bezierPathWithRect:CGRectMake(0, lineY-lineWidth, viewWidth, viewHeight - lineY)];//25.5 0.5 414 109 25.5 37
     //获取圆弧所在圆路径
     [ppp appendPath:[UIBezierPath bezierPathWithRoundedRect:CGRectMake((viewWidth - (viewHeight - kBottomSafeHeight))/2, 0, (viewHeight - kBottomSafeHeight), (viewHeight - kBottomSafeHeight)) cornerRadius:radiu]];
     CAShapeLayer *shapeLayer = [[CAShapeLayer alloc] init];
@@ -95,5 +96,7 @@
 //    _fiveImageView.animationRepeatCount = 1;
 //    [self addSubview:_fiveImageView];
 }
+
+
 
 @end
